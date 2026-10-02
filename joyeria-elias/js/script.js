@@ -1,5 +1,5 @@
 /* ====== CONFIGURACIÓN (EDITA AQUÍ) ====== */
-const WHATSAPP_NUMBER = "573000000000"; // EDITABLE: país + número, sin + ni espacios
+const WHATSAPP_NUMBER = "573016126174"; // EDITABLE: país + número, sin + ni espacios
 const INSTAGRAM_USER  = "tu_usuario";   // EDITABLE: usuario de Instagram sin @
 
 /* ====== PRECIOS DE VENTA (COP por unidad, según tamaño) ======
