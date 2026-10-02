@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ELIAS Joyería | Balines en oro 18k</title>
+<meta name="description" content="ELIAS Joyería: balines lisos y diamantados en oro 18k ley 750, en oro amarillo y oro rosa. Consulta y compra por WhatsApp.">
+<meta property="og:title" content="ELIAS Joyería | Balines en oro 18k">
+<meta property="og:description" content="Balines lisos y diamantados en oro 18k ley 750.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="images/productos/hero-balines.jpg">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%230d0d0d'/%3E%3Cpath d='M32 6 58 32 32 58 6 32Z' fill='none' stroke='%23c9a45c' stroke-width='3'/%3E%3Ctext x='32' y='41' font-size='26' text-anchor='middle' fill='%23c9a45c' font-family='Georgia,serif'%3EE%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+<header class="header" id="inicio-top">
+  <a href="#inicio" class="logo" aria-label="ELIAS Joyería - inicio">
+    <svg viewBox="0 0 64 64" width="38" height="38" aria-hidden="true"><path d="M32 4 60 32 32 60 4 32Z" fill="none" stroke="currentColor" stroke-width="2"/><path d="M32 12 52 32 32 52 12 32Z" fill="none" stroke="currentColor" stroke-width=".8" opacity=".6"/><text x="32" y="42" font-size="28" text-anchor="middle" fill="currentColor" font-family="Cormorant Garamond,Georgia,serif">E</text></svg>
+    <span><b>ELIAS</b><small>JOYERÍA</small></span>
+  </a>
+  <nav id="menu" aria-label="Principal">
+    <a href="#inicio">Inicio</a><a href="#catalogo">Catálogo</a><a href="#nosotros">Sobre nosotros</a><a href="#contacto">Contacto</a>
+  </nav>
+  <button class="cart-btn" id="abrirLista" aria-label="Abrir lista de interés">Mi lista <span id="contador">0</span></button>
+  <button class="burger" id="burger" aria-label="Menú" aria-expanded="false"><i></i><i></i></button>
+</header>
+
+<main>
+<section class="hero" id="inicio">
+  <div class="hero-text">
+    <p class="eyebrow">Oro 18k · Ley 750</p>
+    <h1>El detalle que<br><em>convierte una joya</em><br>en tuya.</h1>
+    <p>Balines lisos y diamantados en oro amarillo y oro rosa, listos para crear tus propias piezas.</p>
+    <a class="btn" href="#catalogo">Ver catálogo</a>
+  </div>
+  <div class="hero-img"><img src="images/productos/hero-balines.jpg" alt="Balines diamantados en oro 18k" fetchpriority="high"></div>
+</section>
+
+<section class="catalogo" id="catalogo">
+  <p class="eyebrow">Colección</p>
+  <h2>Catálogo</h2>
+  <div class="tools">
+    <div class="filtros" id="filtros" role="group" aria-label="Filtros"></div>
+    <input type="search" id="buscador" placeholder="Buscar por nombre..." aria-label="Buscar producto">
+  </div>
+  <div class="grid" id="grid"></div>
+  <p class="vacio" id="vacio" hidden>No encontramos productos con esa búsqueda.</p>
+  <p class="nota">Precios en COP por unidad. Piezas huecas en oro 18k.</p>
+</section>
+
+<section class="guia" id="tamanos">
+  <p class="eyebrow">Referencia</p>
+  <h2>Guía de tamaños</h2>
+  <div class="guia-grid">
+    <figure><img src="images/productos/guia-tamanos-liso.jpg" alt="Guía de tamaños de balines lisos del #3 al #10" loading="lazy"><figcaption>Balines lisos</figcaption></figure>
+    <figure><img src="images/productos/guia-tamanos-diamantado.jpg" alt="Guía de tamaños de balines diamantados del #3 al #10" loading="lazy"><figcaption>Balines diamantados</figcaption></figure>
+  </div>
+</section>
+
+<section class="nosotros" id="nosotros">
+  <p class="eyebrow">Sobre nosotros</p>
+  <h2>ELIAS Joyería</h2>
+  <!-- EDITABLE: reemplaza este texto por la historia real de tu marca -->
+  <p>Trabajamos con oro 18k ley 750 y una selección cuidada de piezas para joyería. Nuestro objetivo es ofrecerte calidad, buena atención y precios claros.</p>
+</section>
+</main>
+
+<footer class="footer" id="contacto">
+  <div><b class="fl">ELIAS</b><p>Joyería</p></div>
+  <div><p>WhatsApp: <a id="fWa" href="#" target="_blank" rel="noopener"></a></p><p>Instagram: <a id="fIg" href="#" target="_blank" rel="noopener"></a></p></div>
+  <div><a href="#inicio">Inicio</a><a href="#catalogo">Catálogo</a><a href="#nosotros">Sobre nosotros</a></div>
+  <p class="copy">© <span id="anio"></span> ELIAS Joyería. Todos los derechos reservados.</p>
+</footer>
+
+<aside class="drawer" id="drawer" aria-label="Lista de interés" aria-hidden="true">
+  <div class="d-head"><h3>Mi lista</h3><button id="cerrarLista" aria-label="Cerrar">×</button></div>
+  <ul id="items"></ul>
+  <div class="d-foot"><p>Total estimado: <b id="total">$0</b></p><button class="btn" id="enviarLista">Enviar por WhatsApp</button><button class="link" id="vaciar">Vaciar lista</button></div>
+</aside>
+<div class="veil" id="veil" hidden></div>
+<script src="js/script.js"></script>
+</body>
+</html>
