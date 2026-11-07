@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>¿Puedo salir hoy?</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💖</text></svg>">
+<style>
+  :root {
+    --fondo: #2a0f2e;
+    --fondo2: #5b1a4a;
+    --rosa: #ff5c8a;
+    --rosa-claro: #ffd1e0;
+    --texto: #fff4f8;
+  }
+  * { box-sizing: border-box; margin: 0; }
+  html, body { height: 100%; }
+  body {
+    font-family: "Trebuchet MS", "Segoe UI", system-ui, sans-serif;
+    color: var(--texto);
+    background: radial-gradient(circle at 30% 20%, var(--fondo2), var(--fondo) 70%);
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 24px;
+  }
+  .tarjeta { max-width: 520px; width: 100%; }
+  .emoji { font-size: 4rem; display: block; margin-bottom: 12px; animation: latido 1.4s infinite; }
+  @keyframes latido { 0%,100% { transform: scale(1); } 50% { transform: scale(1.15); } }
+  h1 { font-family: Georgia, "Times New Roman", serif; font-size: clamp(2rem, 8vw, 3.2rem); line-height: 1.15; margin-bottom: 32px; }
+  .botones { display: flex; gap: 16px; justify-content: center; align-items: center; min-height: 64px; }
+  button {
+    font: inherit; font-weight: 700; font-size: 1.2rem;
+    border: 0; border-radius: 999px; padding: 14px 36px; cursor: pointer;
+  }
+  #si { background: var(--rosa); color: #fff; box-shadow: 0 8px 24px rgba(255, 92, 138, .45); transition: transform .15s; }
+  #si:hover { transform: scale(1.08); }
+  #no { background: var(--rosa-claro); color: var(--fondo); transition: left .25s ease, top .25s ease; }
+  #no.huye { position: fixed; z-index: 10; }
+  button:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
+
+  #cargando, #gracias { display: none; }
+  .barra { width: 240px; height: 10px; background: rgba(255,255,255,.2); border-radius: 99px; margin: 20px auto 0; overflow: hidden; }
+  .barra i { display: block; height: 100%; width: 0; background: var(--rosa); border-radius: 99px; animation: llenar 2.4s linear forwards; }
+  @keyframes llenar { to { width: 100%; } }
+  #gracias h2 { font-family: Georgia, "Times New Roman", serif; font-size: clamp(1.8rem, 7vw, 2.8rem); line-height: 1.25; }
+
+  .corazon { position: fixed; bottom: -40px; font-size: 1.6rem; animation: sube linear forwards; pointer-events: none; }
+  @keyframes sube { to { transform: translateY(-110vh) rotate(25deg); opacity: 0; } }
+
+  @media (prefers-reduced-motion: reduce) {
+    .emoji { animation: none; }
+    #no { transition: none; }
+  }
+</style>
+</head>
+<body>
+
+<main class="tarjeta">
+  <section id="pregunta">
+    <span class="emoji">🥺</span>
+    <h1>¿Puedo salir hoy?</h1>
+    <div class="botones" id="botones">
+      <button id="si">Sí</button>
+      <button id="no">No</button>
+    </div>
+  </section>
+
+  <section id="cargando">
+    <span class="emoji">💌</span>
+    <h1>Enviando tu respuesta…</h1>
+    <div class="barra"><i></i></div>
+  </section>
+
+  <section id="gracias">
+    <span class="emoji">😍</span>
+    <h2>Gracias mi amor,<br>eres la mejor novia del mundo 💖</h2>
+  </section>
+</main>
+
+<script>
+  // ====== CONFIGURACIÓN ======
+  // Elige un nombre largo y único (sin espacios) para tu canal de notificaciones.
+  // Instala la app "ntfy" en tu celular y suscríbete a ESE mismo nombre.
+  const NTFY_TOPIC = "puedo-salir-hoy-CAMBIA-ESTO-123xyz";
+  // ===========================
+
+  const si = document.getElementById("si");
+  const no = document.getElementById("no");
+
+  // --- El botón "No" huye ---
+  function huir() {
+    no.classList.add("huye");
+    const margen = 12;
+    const maxX = window.innerWidth - no.offsetWidth - margen;
+    const maxY = window.innerHeight - no.offsetHeight - margen;
+    let x, y, intentos = 0;
+    do {
+      x = margen + Math.random() * Math.max(0, maxX - margen);
+      y = margen + Math.random() * Math.max(0, maxY - margen);
+      intentos++;
+      // que no aparezca encima del botón "Sí"
+      var r = si.getBoundingClientRect();
+    } while (intentos < 20 && x < r.right + 20 && x + no.offsetWidth > r.left - 20 && y < r.bottom + 20 && y + no.offsetHeight > r.top - 20);
+    no.style.left = x + "px";
+    no.style.top = y + "px";
+  }
+  ["mouseenter", "pointerdown", "touchstart", "focus"].forEach(ev =>
+    no.addEventListener(ev, e => { e.preventDefault(); huir(); }, { passive: false })
+  );
+  no.addEventListener("click", e => { e.preventDefault(); huir(); });
+  // Si se acerca mucho con el mouse, también se mueve
+  document.addEventListener("mousemove", e => {
+    const r = no.getBoundingClientRect();
+    const cx = r.left + r.width / 2, cy = r.top + r.height / 2;
+    if (Math.hypot(e.clientX - cx, e.clientY - cy) < 90) huir();
+  });
+
+  // --- Cuando dice que Sí ---
+  async function notificar() {
+    try {
+      await fetch("https://ntfy.sh/" + encodeURIComponent(NTFY_TOPIC), {
+        method: "POST",
+        headers: { "Title": "Respuesta recibida", "Priority": "high", "Tags": "heart" },
+        body: "Dijo que SI! Hoy puedes salir 💖"
+      });
+    } catch (e) { /* si falla, igual se muestra el mensaje */ }
+  }
+
+  function corazones() {
+    const emojis = ["💖", "💕", "💗", "❤️", "😍"];
+    for (let i = 0; i < 40; i++) {
+      const c = document.createElement("span");
+      c.className = "corazon";
+      c.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+      c.style.left = Math.random() * 100 + "vw";
+      c.style.animationDuration = 3 + Math.random() * 3 + "s";
+      c.style.animationDelay = Math.random() * 1.5 + "s";
+      document.body.appendChild(c);
+      setTimeout(() => c.remove(), 8000);
+    }
+  }
+
+  si.addEventListener("click", () => {
+    notificar();
+    document.getElementById("pregunta").style.display = "none";
+    no.style.display = "none";
+    document.getElementById("cargando").style.display = "block";
+    setTimeout(() => {
+      document.getElementById("cargando").style.display = "none";
+      document.getElementById("gracias").style.display = "block";
+      corazones();
+    }, 2500);
+  });
+</script>
+</body>
+</html>
